@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <title>სარეგისტრაციო გვერდი</title>
+    <style>
+        /*გვერდის ძირითადი სტილი */
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            
+            font-family: Arial, sans-serif;
+            color:white;
+
+            /*გალაქტიკური ფონი*/
+            background:
+                radial-gradient(circle at 20% 20%, #6a00ff55 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, #008cff44 0%, transparent 25%),
+                radial-gradient(circle at 50% 50%, #ff00cc22 0%, transparent 35%),
+                linear-gradient(135deg, #050014, #0b0225, #02000b);
+            overflow: hidden;
+        }
+        /*პატარა ვარსკვლავების ეფექტი*/
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(white 1px, transparent 1px),
+                radial-gradient(#ffffff88 1px, transparent 1px);
+            background-size: 70px 70px, 120px 120px;
+            background-position: 10px 20px, 40px 60px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        /* გვერდის საწყისი ბლარის ეფექტი */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 10;
+
+            background: rgba(5, 0, 20, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            pointer-events: none;
+
+            animation: clear-page 2s ease-out forwards;
+        }
+        @keyframes clear-page {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+        /* საიტის მოკლე ინფორმაცია */
+        .site-info {
+            position: fixed;
+            top: 20px;
+            right: 25px;
+            z-index: 2;
+
+            max-width: 260px;
+            padding: 10px 15px;
+
+            color: #ddd;
+            font-size: 14px;
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+
+            animation: drop-in 0.8s ease-out 2s both;
+        }
+        @keyframes drop-in {
+            from {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* მადლობის ტექსტი თოკით */
+        .thanks-message {
+            position: fixed;
+            top: 88px;
+            right: 25px;
+            z-index: 2;
+
+            max-width: 260px;
+            padding: 10px 15px;
+
+            color: #ddd;
+            font-size: 14px;
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+
+            animation: rope-drop 0.8s ease-out 4s both;
+        }
+        .thanks-message::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: -28px;
+            width: 3px;
+            height: 28px;
+            background: #c4a77d;
+            transform: translateX(-50%);
+        }
+        @keyframes rope-drop {
+            from {
+                opacity: 0;
+                transform: translateY(-100px) rotate(-3deg);
+            }
+            70% {
+                transform: translateY(5px) rotate(2deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotate(0);
+            }
+        }
+        /* უკანა დეკორატიული წარწერა */
+        .welcome-background {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            z-index: 0;
+
+            color: transparent;
+            font-size: clamp(70px, 16vw, 210px);
+            font-weight: 900;
+            letter-spacing: 12px;
+            white-space: nowrap;
+
+            background: linear-gradient(90deg, #7c3aed, #00bfff, #c026d3);
+            background-clip: text;
+            -webkit-background-clip: text;
+            opacity: 0.12;
+            transform: translate(-50%, -50%);
+            user-select: none;
+            pointer-events: none;
+        }
+        /*ფორმის კონტეინერი*/
+        form {
+            position: relative;
+            z-index: 1;
+
+            width: 420px;
+            padding: 35px;
+
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            box-shadow:
+                0 0 30px rgba(128, 0, 255, 0.35),
+                0 0 80px rgba(0, 140, 255, 0.15);
+        }
+        /* სათაური */
+        h1{
+            position: relative;
+            top: -10px;
+            z-index: 1;
+
+            margin-bottom: 10px;
+            text-align: center;
+
+            font-size: 32px;
+
+            background: linear-gradient(
+                90deg,
+                #8a2be2,
+                #00bfff,
+                #ff00cc
+            );
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            text-shadow: 0 0 20px rgba(138, 43, 255, 0.5);
+        }
+        /*label*/
+        label{
+            margin-top: 8px;
+            font-size: 15px;
+            color: #ddd;
+        }
+        /*input და textarea*/
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding:13px 15px;
+            
+            color: white;
+            font-size: 15px;
+
+            background: rgba( 0, 0, 0, 0.25);
+
+            border: 1px solid rgba( 160, 100, 255,0.4);
+            border-radius: 10px;
+
+            outline: none;
+
+            transition: all 0.3s ease;
+        }
+        /*placeholder*/
+        input::placeholder,
+        textarea::placeholder {
+            color: #aaa;
+        }
+        /*focus ეფექტი*/
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            border-color: #a855f7;
+
+            box-shadow: 
+                0 0 10px #8b5cf6,
+                0 0 20px rgba( 0, 191, 255, 0.3);
+
+            background: rgba( 20, 5, 45, 0.6);
+        }
+        /* textarea*/
+        textarea {
+            resize: vertical;
+            min-height: 110px;
+        }
+        /* გაგზავნის ღილაკი */
+        input[type="submit"] {
+            margin-top: 10px;
+            padding: 13px;
+
+            border: none;
+            border-radius: 12px;
+
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+            
+            background: linear-gradient(
+                90deg,
+                #7c3aed,
+                #2563eb,
+                #c026d3
+            );
+            box-shadow:
+                0 0 15px rgba(124, 58, 237, 0.6);
+
+            transition: 0.3s ease;    
+        }
+        /* ღილაკზე მაუსის მიტანა */
+        input[type="submit"]:hover {
+            transform: translateY(-2px) scale(1.02);
+
+            box-shadow:
+                0 0 20px #8b5cf6,
+                0 0 40px rgba(37, 99, 235, 0.5);
+        }
+        /* დაჭერისას */
+        input[type="submit"]:active {
+            transform: translateY(0) scale(0.98);
+
+            box-shadow:
+                0 0 10px #8b5cf6,
+                0 0 20px rgba(37, 99, 235, 0.5);
+        }
+        /*მობილურისთის */
+        @media (max-width: 500px){
+            form {
+                width: 90%;
+                padding: 25px;
+            }
+            .site-info {
+                top: 12px;
+                right: 12px;
+                max-width: 210px;
+                font-size: 12px;
+            }
+            .thanks-message {
+                top: 75px;
+                right: 12px;
+                max-width: 210px;
+                font-size: 12px;
+            }
+            h1{
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-background">WELCOME</div>
+    <div class="site-info">აქ შეგიძლიათ თქვენი ანგარიშის შექმნა.</div>
+    <div class="thanks-message">მადლობთ, რომ იყენებთ ჩვენს საიტს.</div>
+    <h1>სარეგისტრაციო გვერდი</h1>
+    <form action="/submit" method="post">
+        <label for="name">სახელი:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">ელ. ფოსტა:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="comment">კომენტარი:</label>
+        <textarea id="comment" name="comment" rows="4" cols="50" placeholder="დაწერეთ აქ თქვენი შეფასება..."></textarea>
+
+        <input type="submit" value="გაგზავნა">
+    </form>
+</body>
+</html>
