@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <title>სარეგისტრაციო გვერდი</title>
+</head>
+<body>
+    <h1>სარეგისტრაციო გვერდი</h1>
+    <form action="/submit" method="post">
+        <label for="name">სახელი:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">ელ. ფოსტა:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="comment">კომენტარი:</label>
+        <textarea id="comment" name="comment" rows="4" cols="50" placeholder="დაწერეთ აქ თქვენი შეფასება..."></textarea>
+
+        <input type="submit" value="გაგზავნა">
+    </form>
+</body>
+</html>
